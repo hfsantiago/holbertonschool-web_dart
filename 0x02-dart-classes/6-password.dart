@@ -7,20 +7,38 @@ class Password {
   Password({password}) : _password = password;
 
   bool isValid() {
-    if ((this._password?.length ?? 0) > 6 &&
-        (this._password?.length ?? 0) < 18) {
-      if (this._password!.contains(RegExp(r"(?=.*[a-z])(?=.*[A-Z])\w+"))) {
-        if (this._password!.contains(RegExp(r'\d'))) {
+    bool upperLetter = false;
 
-          return true;
-        }
+    bool lowerLetter = false;
+
+    bool number = false;
+    if ((_password?.length ?? 0) >= 8 && (_password?.length ?? 0) < 16) {
+      int i = 0;
+
+      while (i < (_password?.length ?? 0) &&
+          !(number && upperLetter && lowerLetter)) {
+        if (_password!.codeUnitAt(i) >= 'A'.codeUnitAt(0) &&
+            _password!.codeUnitAt(i) <= "Z".codeUnitAt(0))
+          upperLetter = true;
+        else if (_password!.codeUnitAt(i) >= 'a'.codeUnitAt(0) &&
+            _password!.codeUnitAt(i) <= "z".codeUnitAt(0))
+          lowerLetter = true;
+        else if (_password!.codeUnitAt(i) >= '0'.codeUnitAt(0) &&
+            _password!.codeUnitAt(i) <= "9".codeUnitAt(0)) number = true;
+
+        i++;
       }
-    }
-    return false;
+
+      if (number && upperLetter && lowerLetter)
+        return true;
+      else
+        return false;
+    } else
+      return false;
   }
 
   @override
   String toString() {
-    return "Your Password is: ${this._password}";
+    return "Your Password is: $_password";
   }
 }

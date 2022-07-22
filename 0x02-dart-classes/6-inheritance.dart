@@ -19,20 +19,16 @@ class User extends Password {
   }
 
   static User fromJson(Map<dynamic, dynamic> userJson) {
-    return User(
-        id: userJson['id'],
-        name: userJson['name'],
-        age: userJson['age'],
-        height: userJson['height']);
+    final userId = userJson['id'] as int;
+    final userName = userJson['name'] as String;
+    final userAge = userJson['age'] as int;
+    final userHeight = userJson['height'] as double;
+    return User(id: userId, name: userName, age: userAge, height: userHeight);
   }
 
-  String showName() {
-    return "Hello $name";
-  }
-
+  @override
   String toString() {
     final pass = Password(password: user_password);
-
-    return "User(id : $id ,name: $name, age: $age, height: $height, Password: ${pass.isValid()}})";
+    return 'User(id : $id ,name: $name, age: $age, height: $height, Password: ${pass.isValid()})';
   }
 }
